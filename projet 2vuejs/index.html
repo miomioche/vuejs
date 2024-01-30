@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <title> Liste produits</title>
+</head>
+
+<body>
+
+    <main id="app">
+
+        <h1>
+          Liste des produits
+        </h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom produit</th>
+                    <th>Prix produit</th>
+                    <th>Quantité produit</th>
+                    <th>Catégorie produit</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(prod,index) in prods" :key="index" >
+                    <td>{{ prod.name }}</td>
+                    <td>{{ prod.price }}</td>
+                    <td>{{ prod.quantity }}</td>
+                    <td>{{ prod.category }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary actions" v-on:click="openModal(index)" >Modifier</button>
+                        <button v-on:click="removeProduct(index)" type="button" class="btn btn-danger actions">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- MODAL  -->
+        <div id="editModal" class="modal" v-if="modal" v-cloak>
+            <div class="modal-content">
+                <span class="close" v-on:click="closeModal()" >X</span>
+                <h2>Modifier le produit :</h2>
+
+                <form>
+                    <label for="editName">Nom produit:</label><br>
+                    <input type="text" id="editName" v-model="newValue.name" ><br>
+
+                    <label for="editPrice">Prix produit:</label><br>
+                    <input type="number" id="editPrice" v-model="newValue.price"><br>
+
+                    <label for="editQuantity">Quantité produit:</label><br>
+                    <input type="number" id="editQuantity" v-model="newValue.quantity"><br>
+
+                    <label for="editCategory">Catégorie produit:</label><br>
+                    <select id="editCategory">
+                        <option value="category1">Catégorie 1</option>
+                        <option value="category2">Catégorie 2</option>
+                        <option value="category3">Catégorie 3</option>
+                    </select><br>
+
+                    <br><br>
+                    <input type="button" value="Enregistrer" class="btn btn-success" v-on:click="editProds ">
+                </form>
+            </div>
+        </div> 
+        <!-- MODAL  -->
+
+        <section class="add-more">
+            <p>Ajouter un produit</p>
+            <form >
+
+                <label for="name">Nom produit:</label><br>
+                <input v-model ="newValue.name" type="text" id="name" name="name"><br>
+
+                <label for="price">Prix produit:</label><br>
+                <input v-model ="newValue.price" type="number" id="price" name="price"><br>
+
+                <label for="quantity">Quantité produit:</label><br>
+                <input v-model ="newValue.quantity" type="number" id="quantity" name="quantity"><br>
+
+                <label for="category">Catégorie produit:</label><br>
+                <select v-model ="newValue.category" id="category" name="category" >
+                    <option value="category1">Catégorie 1</option>
+                    <option value="category2">Catégorie 2</option>
+                    <option value="category3">Catégorie 3</option>
+                </select><br>
+
+                <br><br>
+                <input type="button" value="Ajouter" class="btn btn-success" v-on:click="caisse">
+            </form>
+        </section>
+
+    </main>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
